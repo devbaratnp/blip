@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\PublicLeadController;
 use App\Http\Controllers\Api\V1\ActivityController;
 use App\Http\Controllers\Api\V1\MediaController;
 use App\Http\Controllers\Api\V1\SettingsController;
+use App\Http\Controllers\Api\V1\PublicSettingsController;
 use App\Http\Controllers\Api\V1\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,7 @@ Route::middleware('web')->prefix('v1')->group(function (): void {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum', 'admin']);
     Route::get('/auth/me', [AuthController::class, 'me'])->middleware(['auth:sanctum', 'admin']);
     Route::get('/public/pages/{page:slug}', [PublicContentController::class, 'page']);
+    Route::get('/public/settings', [PublicSettingsController::class, 'show']);
     Route::post('/leads', [PublicLeadController::class, 'store']);
     Route::middleware(['auth:sanctum', 'admin'])->group(function (): void {
         Route::get('/catalog/options', [ProductController::class, 'options']);

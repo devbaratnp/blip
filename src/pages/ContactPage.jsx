@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Clock3, Mail, MapPin, Phone, Send } from 'lucide-react';
 import { newIdempotencyKey, submitPublicLead } from '../lib/leadClient.js';
+import { getPublicSettings } from '../lib/publicContentApi.js';
 import { site } from '../data/site.js';
 import PublicPageHero from '../components/PublicPageHero.jsx';
 
@@ -11,6 +12,9 @@ export default function ContactPage({ onNavigate }) {
   const [submitted, setSubmitted] = useState(false);
   const [submission, setSubmission] = useState({ status: 'idle', error: '' });
   const idempotencyKey = useRef(newIdempotencyKey());
+  const [contact, setContact] = useState(site);
+
+  useEffect(() => { getPublicSettings().then((settings) => setContact((current) => ({ ...current, ...settings }))); }, []);
 
   const updateField = (field) => (event) => {
     setSubmitted(false);
@@ -49,10 +53,10 @@ export default function ContactPage({ onNavigate }) {
         </div>
         <div className="container contact-layout">
           <div className="contact-details">
-            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Clock3 size={19} /></span><div><h3>Office hours</h3><p>Sun-Fri 10:00-17:00 &amp; Saturday- Closed</p></div></article>
-            <article className="contact-detail-card"><span className="contact-detail-card__icon"><MapPin size={19} /></span><div><h3>Address</h3><p>Indrayani Marga, Sanepa-02</p></div></article>
-            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Phone size={19} /></span><div><h3>Contact details</h3><a href={`tel:${site.phoneHref}`}>{site.phoneDisplay}</a></div></article>
-            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Mail size={19} /></span><div><h3>Mail</h3><a href={`mailto:${site.email}`}>{site.email}</a></div></article>
+            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Clock3 size={19} /></span><div><h3>Office hours</h3><p>{contact.officeHours || contact.hours}</p></div></article>
+            <article className="contact-detail-card"><span className="contact-detail-card__icon"><MapPin size={19} /></span><div><h3>Address</h3><p>{contact.address}</p></div></article>
+            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Phone size={19} /></span><div><h3>Contact details</h3><a href={'tel:' + (contact.phoneHref || site.phoneHref)}>{contact.phoneDisplay || site.phoneDisplay}</a></div></article>
+            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Mail size={19} /></span><div><h3>Mail</h3><a href={'mailto:' + contact.email}>{contact.email}</a></div></article>
             <div className="contact-follow"><span className="eyebrow">Find us at</span><div><a href="https://facebook.com" aria-label="BLI on Facebook">f</a><a href="https://youtube.com" aria-label="BLI on YouTube">▶</a></div></div>
           </div>
 
@@ -73,7 +77,7 @@ export default function ContactPage({ onNavigate }) {
 
       <section className="container public-cta public-cta--compact">
         <div><span className="eyebrow">Prefer a faster route?</span><h2>Request a quote for your project.</h2><p>We can help scope products, installation and support together.</p></div>
-        <a className="button button--outline" href={`mailto:${site.email}?subject=Project%20quote%20request`}>Email BLI <Mail size={16} /></a>
+        <a className="button button--outline" href={'mailto:' + contact.email + '?subject=Project%20quote%20request'}>Email BLI <Mail size={16} /></a>
       </section>
     </main>
   );
