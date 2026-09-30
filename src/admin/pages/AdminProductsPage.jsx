@@ -54,7 +54,7 @@ function ProductForm({ productId, onNavigate }) {
       const response = isNew ? await apiPost('/api/v1/products', { ...payload, status: publish ? 'published' : 'draft' }) : await apiPatch(`/api/v1/products/${productId}`, { ...payload, status: publish ? 'published' : form.status });
       const saved = response.data || response;
       if (publish && saved.status !== 'published') await apiPost(`/api/v1/products/${saved.id}/publish`, {});
-      setState({ status: 'saved', error: '', message: publish ? 'Product published.' : 'Product saved as draft.' });
+      setState({ status: 'saved', error: '', message: publish ? 'Product published.' : (isNew ? 'Product saved as draft.' : 'Product changes saved.') });
       if (isNew) onNavigate(`/admin/products/${saved.id}`);
       else setForm((current) => ({ ...current, ...saved, features: (saved.features || []).join('\n') }));
     } catch (error) { setState({ status: 'error', error: error.payload?.message || error.message, message: '' }); }

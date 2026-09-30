@@ -2,12 +2,18 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ProductController;
+use App\Http\Controllers\Api\V1\PageController;
+use App\Http\Controllers\Api\V1\LeadController;
+use App\Http\Controllers\Api\V1\PublicLeadController;
+use App\Http\Controllers\Api\V1\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('web')->prefix('v1')->group(function (): void {
     Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:login');
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum', 'admin']);
     Route::get('/auth/me', [AuthController::class, 'me'])->middleware(['auth:sanctum', 'admin']);
+    Route::get('/public/pages/{page:slug}', [PublicContentController::class, 'page']);
+    Route::post('/leads', [PublicLeadController::class, 'store']);
     Route::middleware(['auth:sanctum', 'admin'])->group(function (): void {
         Route::get('/catalog/options', [ProductController::class, 'options']);
         Route::get('/products', [ProductController::class, 'index']);
@@ -16,5 +22,16 @@ Route::middleware('web')->prefix('v1')->group(function (): void {
         Route::patch('/products/{product}', [ProductController::class, 'update']);
         Route::post('/products/{product}/publish', [ProductController::class, 'publish']);
         Route::post('/products/{product}/archive', [ProductController::class, 'archive']);
+        Route::get('/pages', [PageController::class, 'index']);
+        Route::get('/pages/{page}', [PageController::class, 'show']);
+        Route::patch('/pages/{page}', [PageController::class, 'update']);
+        Route::post('/pages/{page}/sections', [PageController::class, 'storeSection']);
+        Route::patch('/page-sections/{pageSection}', [PageController::class, 'updateSection']);
+        Route::post('/pages/{page}/publish', [PageController::class, 'publish']);
+        Route::post('/pages/{page}/archive', [PageController::class, 'archive']);
+        Route::get('/leads', [LeadController::class, 'index']);
+        Route::get('/leads/{lead}', [LeadController::class, 'show']);
+        Route::patch('/leads/{lead}', [LeadController::class, 'update']);
+        Route::post('/leads/{lead}/notes', [LeadController::class, 'note']);
     });
 });

@@ -15,9 +15,9 @@ export function readAdminRoute(pathname = window.location.pathname) {
   if (normalized === '/admin' || normalized === '/admin/login') return { kind: normalized === '/admin/login' ? 'login' : 'dashboard' };
   if (normalized.startsWith('/admin/products')) return { kind: 'products', id: normalized.split('/')[3] || null };
   if (normalized.startsWith('/admin/categories')) return { kind: 'categories' };
-  if (normalized.startsWith('/admin/pages')) return { kind: 'pages' };
+  if (normalized.startsWith('/admin/pages')) return { kind: 'pages', id: normalized.split('/')[3] || null };
   if (normalized.startsWith('/admin/media')) return { kind: 'media' };
-  if (normalized.startsWith('/admin/leads')) return { kind: 'leads' };
+  if (normalized.startsWith('/admin/leads')) return { kind: 'leads', id: normalized.split('/')[3] || null };
   if (normalized.startsWith('/admin/downloads')) return { kind: 'downloads' };
   if (normalized.startsWith('/admin/settings')) return { kind: 'settings' };
   if (normalized.startsWith('/admin/activity')) return { kind: 'activity' };

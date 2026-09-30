@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CheckCircle2, Clock3, Mail, MapPin, Phone, Send } from 'lucide-react';
+import { submitPublicLead } from '../lib/leadClient.js';
 import { site } from '../data/site.js';
 import PublicPageHero from '../components/PublicPageHero.jsx';
 
@@ -8,16 +9,25 @@ const initialForm = { name: '', email: '', subject: '', message: '' };
 export default function ContactPage({ onNavigate }) {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
+  const [submission, setSubmission] = useState({ status: 'idle', error: '' });
 
   const updateField = (field) => (event) => {
     setSubmitted(false);
     setForm((current) => ({ ...current, [field]: event.target.value }));
   };
 
-  const submitForm = (event) => {
+  const submitForm = async (event) => {
     event.preventDefault();
-    setSubmitted(true);
-    setForm(initialForm);
+    setSubmitted(false);
+    setSubmission({ status: 'submitting', error: '' });
+    try {
+      await submitPublicLead({ type: 'contact', name: form.name, email: form.email, source: 'contact-page', message: form.message, payload: { subject: form.subject } });
+      setSubmitted(true);
+      setSubmission({ status: 'idle', error: '' });
+      setForm(initialForm);
+    } catch (error) {
+      setSubmission({ status: 'error', error: error.payload?.message || error.message });
+    }
   };
 
   return (
@@ -52,8 +62,9 @@ export default function ContactPage({ onNavigate }) {
               <label className="field-span-2">Subject *<input required value={form.subject} onChange={updateField('subject')} placeholder="What can we help with?" /></label>
               <label className="field-span-2">Your Message *<textarea required rows="5" value={form.message} onChange={updateField('message')} placeholder="Your Message" /></label>
             </div>
+            {submission.error && <p className="form-status form-status--error" role="alert">{submission.error}</p>}
             {submitted && <p className="form-status" role="status"><CheckCircle2 size={17} />Thanks—your enquiry is ready for the BLI team. We’ll get back to you within 24 hr.</p>}
-            <button className="button button--primary" type="submit">Send Message <Send size={16} /></button>
+            <button className="button button--primary" type="submit" disabled={submission.status === 'submitting'}>{submission.status === 'submitting' ? 'Sending…' : 'Send Message'} <Send size={16} /></button>
           </form>
         </div>
       </section>

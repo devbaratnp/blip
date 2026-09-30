@@ -9,8 +9,8 @@ describe('admin route parsing', () => {
 
   test('maps nested admin modules to their workspace kind', () => {
     expect(readAdminRoute('/admin/products/new')).toEqual({ kind: 'products', id: 'new' });
-    expect(readAdminRoute('/admin/pages/home')).toEqual({ kind: 'pages' });
-    expect(readAdminRoute('/admin/leads/42')).toEqual({ kind: 'leads' });
+    expect(readAdminRoute('/admin/pages/home')).toEqual({ kind: 'pages', id: 'home' });
+    expect(readAdminRoute('/admin/leads/42')).toEqual({ kind: 'leads', id: '42' });
   });
 
   test('falls back to dashboard for an unknown admin path', () => {

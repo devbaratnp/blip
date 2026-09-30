@@ -34,6 +34,7 @@ export async function ensureCsrfCookie() {
 
 export async function apiRequest(path, options = {}) {
   const method = (options.method || 'GET').toUpperCase();
+  const csrfRetry = options._csrfRetry === true;
   if (!['GET', 'HEAD', 'OPTIONS'].includes(method)) await ensureCsrfCookie();
 
   const response = await fetch(`${apiBase}${path}`, {
@@ -44,6 +45,11 @@ export async function apiRequest(path, options = {}) {
   });
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
+    if (response.status === 419 && !csrfRetry) {
+      csrfReady = false;
+      await ensureCsrfCookie();
+      return apiRequest(path, { ...options, _csrfRetry: true });
+    }
     if (response.status === 419) csrfReady = false;
     throw new ApiError(payload?.message || 'The request could not be completed.', response.status, payload);
   }
