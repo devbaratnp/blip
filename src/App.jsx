@@ -88,7 +88,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Header search={filters.query} onSearchChange={(value) => updateFilter('query', value)} onSearchSubmit={handleSearchSubmit} onNavigate={navigate} cartCount={cartCount} cartOpen={cartOpen} onOpenCart={() => setCartOpen(true)} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((current) => !current)} mobileNavOpen={mobileNavOpen} onToggleMobileNav={() => setMobileNavOpen((current) => !current)} />
+      <Header search={filters.query} onSearchChange={(value) => updateFilter('query', value)} onSearchSubmit={handleSearchSubmit} onNavigate={navigate} onQuote={() => openQuote()} cartCount={cartCount} cartOpen={cartOpen} onOpenCart={() => setCartOpen(true)} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((current) => !current)} mobileNavOpen={mobileNavOpen} onToggleMobileNav={() => setMobileNavOpen((current) => !current)} />
       {route.kind === 'home' && <HomePage onNavigate={navigate} onQuote={openQuote} onAddToCart={addToCart} onCompare={toggleCompare} compareIds={compareIds} />}
       {route.kind === 'products' && <ProductsPage filters={filters} onFilterChange={updateFilter} onResetFilters={resetFilters} onNavigate={navigate} onQuote={openQuote} onAddToCart={addToCart} onCompare={toggleCompare} compareIds={compareIds} mobileFiltersOpen={mobileFiltersOpen} onToggleMobileFilters={() => setMobileFiltersOpen((current) => !current)} onCloseMobileFilters={() => setMobileFiltersOpen(false)} />}
       {route.kind === 'detail' && <ProductDetailPage product={selectedProduct} onNavigate={navigate} onQuote={openQuote} onAddToCart={addToCart} />}

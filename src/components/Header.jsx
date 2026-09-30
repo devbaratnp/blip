@@ -1,6 +1,5 @@
-import { Heart, Menu, ShoppingCart, UserRound, X } from 'lucide-react';
+import { ArrowRight, Heart, Menu, ShoppingCart, UserRound, X } from 'lucide-react';
 import { site } from '../data/site.js';
-import MegaMenu from './MegaMenu.jsx';
 import SearchBar from './SearchBar.jsx';
 
 export default function Header({
@@ -8,11 +7,10 @@ export default function Header({
   onSearchChange,
   onSearchSubmit,
   onNavigate,
+  onQuote,
   cartCount,
   cartOpen,
   onOpenCart,
-  menuOpen,
-  onToggleMenu,
   mobileNavOpen,
   onToggleMobileNav,
 }) {
@@ -31,6 +29,7 @@ export default function Header({
         </button>
         <button className="brand-lockup" type="button" onClick={() => onNavigate('/')} aria-label="BLI home">
           <img src="/assets/logo.jpg" alt="BLI" />
+          <span>BLI — Advance.Authentic.Affordable</span>
         </button>
         <SearchBar value={search} onChange={onSearchChange} onSubmit={onSearchSubmit} />
         <div className="header-actions" aria-label="Account actions">
@@ -51,20 +50,15 @@ export default function Header({
 
       <div className="nav-shell">
         <div className="container nav-inner">
-          <div className="category-trigger-wrap">
-            <button className="category-trigger" type="button" onClick={onToggleMenu} aria-expanded={menuOpen}>
-              <Menu size={18} />
-              <span>All Categories</span>
-              <span className="category-trigger__chevron">⌄</span>
-            </button>
-            <MegaMenu open={menuOpen} onNavigate={onNavigate} />
-          </div>
           <nav className={`primary-nav ${mobileNavOpen ? 'primary-nav--open' : ''}`} aria-label="Primary navigation">
-            {site.navigation.map((item) => (
-              <button key={item} type="button" onClick={() => onNavigate(`/products?category=${encodeURIComponent(item)}`)}>{item}</button>
-            ))}
-            <button type="button" className="primary-nav__offer" onClick={() => onNavigate('/products')}>Offers</button>
+            <button type="button" onClick={() => onNavigate('/')}>Home</button>
+            <button type="button" onClick={() => onNavigate('/products')}>Products</button>
+            <button type="button" onClick={() => onNavigate('/products')}>Solutions</button>
+            <button type="button" onClick={() => onNavigate('/products')}>Projects</button>
+            <button type="button" onClick={() => onNavigate('/products')}>About Us</button>
+            <button type="button" onClick={() => onNavigate('/products')}>Support</button>
           </nav>
+          <button className="nav-quote" type="button" onClick={onQuote}>Request a Quote <ArrowRight size={15} /></button>
         </div>
       </div>
       {mobileNavOpen && (

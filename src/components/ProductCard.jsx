@@ -1,4 +1,4 @@
-import { ArrowRight, Check, FileText, GitCompareArrows, Heart, ShoppingCart } from 'lucide-react';
+import { ArrowRight, Check, FileText, Heart } from 'lucide-react';
 import { formatNpr } from '../data/products.js';
 
 export default function ProductCard({ product, onNavigate, onAddToCart, onQuote, onCompare, compared }) {
@@ -28,7 +28,7 @@ export default function ProductCard({ product, onNavigate, onAddToCart, onQuote,
           {product.quoteOnly ? (
             <button type="button" className="button button--primary button--full" onClick={() => onQuote(product)}><FileText size={16} />{product.quoteLabel || 'Request quote'}</button>
           ) : (
-            <button type="button" className="button button--primary button--full" onClick={() => onAddToCart(product)}><ShoppingCart size={16} />Buy now</button>
+            <button type="button" className="button button--primary button--full" onClick={() => onAddToCart(product)}><FileText size={16} />Inquiry now</button>
           )}
           <button type="button" className="button button--outline button--full" onClick={() => onQuote(product)}><FileText size={16} />Request quote</button>
         </div>
