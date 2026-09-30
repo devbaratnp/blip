@@ -40,9 +40,6 @@ h1, h2, h3 { line-height: 1.08; }
 .text-link { display: inline-flex; align-items: center; gap: 7px; border: 0; padding: 0; background: transparent; color: var(--bli-blue-dark); font-size: 13px; font-weight: 800; }
 .text-link:hover { color: var(--bli-red); }
 
-.utility-bar { border-bottom: 1px solid rgba(220, 229, 238, 0.7); background: var(--ink); color: #dce8f2; font-size: 11px; }
-.utility-bar__inner { display: flex; min-height: 31px; align-items: center; justify-content: space-between; gap: 20px; }
-.utility-bar a { color: #fff; font-weight: 700; }
 .header-main { display: grid; grid-template-columns: 190px minmax(280px, 1fr) auto; align-items: center; gap: 28px; min-height: 90px; }
 .brand-lockup, .footer-logo { display: flex; align-items: center; border: 0; background: transparent; padding: 0; }
 .brand-lockup img { width: 174px; height: 67px; object-fit: contain; object-position: left center; }
@@ -331,8 +328,6 @@ h1, h2, h3 { line-height: 1.08; }
 
 @media (max-width: 760px) {
   .container, .section--tint > .container { width: min(calc(100% - 30px), var(--container)); }
-  .utility-bar__inner { min-height: 28px; justify-content: center; text-align: center; }
-  .utility-bar__inner > span { display: none; }
   .header-main { grid-template-columns: auto 1fr auto; min-height: 72px; gap: 9px; }
   .mobile-menu-toggle { display: inline-grid; place-items: center; justify-self: start; margin-left: -12px; }
   .brand-lockup { justify-self: center; }
@@ -597,8 +592,8 @@ h1, h2, h3 { line-height: 1.08; }
 .dealer-application__line svg { color: var(--success); }
 .dealer-form { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; border: 1px solid var(--line); background: #fff; padding: 24px; box-shadow: var(--shadow-sm); }
 .dealer-form label { display: grid; gap: 6px; color: var(--ink-soft); font-size: 11px; font-weight: 700; }
-.dealer-form input { width: 100%; border: 1px solid var(--line-strong); border-radius: 5px; outline: 0; padding: 12px; color: var(--ink); font-size: 12px; }
-.dealer-form input:focus { border-color: var(--bli-blue); box-shadow: 0 0 0 3px rgba(8, 119, 201, .1); }
+.dealer-form input, .dealer-form textarea { width: 100%; border: 1px solid var(--line-strong); border-radius: 5px; outline: 0; padding: 12px; color: var(--ink); font-size: 12px; resize: vertical; }
+.dealer-form input:focus, .dealer-form textarea:focus { border-color: var(--bli-blue); box-shadow: 0 0 0 3px rgba(8, 119, 201, .1); }
 .dealer-form .form-status, .dealer-form .button { grid-column: span 2; }
 
 @media (max-width: 900px) {

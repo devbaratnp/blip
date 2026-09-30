@@ -1,5 +1,4 @@
 import { ArrowRight, Heart, Menu, ShoppingCart, UserRound, X } from 'lucide-react';
-import { site } from '../data/site.js';
 import SearchBar from './SearchBar.jsx';
 
 export default function Header({
@@ -26,13 +25,6 @@ export default function Header({
 
   return (
     <header className="site-header">
-      <div className="utility-bar">
-        <div className="container utility-bar__inner">
-          <span>Trusted security and communication solutions across Nepal</span>
-          <a href={`tel:${site.phoneHref}`}>Need help? Call {site.phoneDisplay}</a>
-        </div>
-      </div>
-
       <div className="container header-main">
         <button className="mobile-menu-toggle" type="button" onClick={onToggleMobileNav} aria-label={mobileNavOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={mobileNavOpen}>
           {mobileNavOpen ? <X size={23} /> : <Menu size={23} />}

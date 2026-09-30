@@ -24,36 +24,36 @@ export default function ContactPage({ onNavigate }) {
     <main className="public-page contact-page">
       <PublicPageHero
         eyebrow="Contact BLI"
-        title="Let’s talk about what your space needs."
-        description="Share a question, project requirement or product enquiry. Our team will help you find a practical next step."
+        title="Contact us if you have any queries."
+        description="We will get back to you within 24 hr."
         current="Contact Us"
         onNavigate={onNavigate}
       />
 
       <section className="public-section">
         <div className="container public-section-heading public-section-heading--split">
-          <div><span className="eyebrow">Get in touch</span><h2>Contact us if you have any questions.</h2></div>
-          <p>Tell us a little about your requirement and we’ll respond with the right information or arrange a consultation.</p>
+          <div><span className="eyebrow">Contact us</span><h2>We’re here to help with your security requirements.</h2></div>
+          <p>Send us your question or requirement and the BLI team will get back to you within 24 hr.</p>
         </div>
         <div className="container contact-layout">
           <div className="contact-details">
-            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Clock3 size={19} /></span><div><h3>Office hours</h3><p>{site.hours}</p></div></article>
-            <article className="contact-detail-card"><span className="contact-detail-card__icon"><MapPin size={19} /></span><div><h3>Address</h3><p>{site.address}</p></div></article>
+            <article className="contact-detail-card"><span className="contact-detail-card__icon"><Clock3 size={19} /></span><div><h3>Office hours</h3><p>Sun-Fri 10:00-17:00 &amp; Saturday- Closed</p></div></article>
+            <article className="contact-detail-card"><span className="contact-detail-card__icon"><MapPin size={19} /></span><div><h3>Address</h3><p>Indrayani Marga, Sanepa-02</p></div></article>
             <article className="contact-detail-card"><span className="contact-detail-card__icon"><Phone size={19} /></span><div><h3>Contact details</h3><a href={`tel:${site.phoneHref}`}>{site.phoneDisplay}</a></div></article>
             <article className="contact-detail-card"><span className="contact-detail-card__icon"><Mail size={19} /></span><div><h3>Mail</h3><a href={`mailto:${site.email}`}>{site.email}</a></div></article>
-            <div className="contact-follow"><span className="eyebrow">Find us online</span><div><a href="https://facebook.com" aria-label="BLI on Facebook">f</a><a href="https://youtube.com" aria-label="BLI on YouTube">▶</a></div></div>
+            <div className="contact-follow"><span className="eyebrow">Find us at</span><div><a href="https://facebook.com" aria-label="BLI on Facebook">f</a><a href="https://youtube.com" aria-label="BLI on YouTube">▶</a></div></div>
           </div>
 
           <form className="contact-form-card" onSubmit={submitForm}>
-            <div className="contact-form-card__head"><span className="eyebrow">Send an enquiry</span><h2>How can we help?</h2><p>Required fields are marked with an asterisk.</p></div>
+            <div className="contact-form-card__head"><span className="eyebrow">Send message</span><h2>Tell us what you need.</h2><p>Required fields are marked with an asterisk.</p></div>
             <div className="public-form-grid">
               <label>Name *<input required value={form.name} onChange={updateField('name')} placeholder="Your name" /></label>
               <label>Email *<input required type="email" value={form.email} onChange={updateField('email')} placeholder="you@company.com" /></label>
               <label className="field-span-2">Subject *<input required value={form.subject} onChange={updateField('subject')} placeholder="What can we help with?" /></label>
-              <label className="field-span-2">Your message *<textarea required rows="5" value={form.message} onChange={updateField('message')} placeholder="Tell us about your requirement" /></label>
+              <label className="field-span-2">Your Message *<textarea required rows="5" value={form.message} onChange={updateField('message')} placeholder="Your Message" /></label>
             </div>
-            {submitted && <p className="form-status" role="status"><CheckCircle2 size={17} />Thanks—your enquiry has been recorded. We’ll get back to you within 24 hours.</p>}
-            <button className="button button--primary" type="submit">Send message <Send size={16} /></button>
+            {submitted && <p className="form-status" role="status"><CheckCircle2 size={17} />Thanks—your enquiry is ready for the BLI team. We’ll get back to you within 24 hr.</p>}
+            <button className="button button--primary" type="submit">Send Message <Send size={16} /></button>
           </form>
         </div>
       </section>

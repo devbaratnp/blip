@@ -5,17 +5,17 @@ import PublicPageHero from '../components/PublicPageHero.jsx';
 const openings = [
   {
     title: 'Mid or senior level accountant',
-    type: 'Full-time · Kathmandu',
+    type: 'Accounting · Kathmandu',
     image: '/assets/categories/time-attendance.jpg',
-    description: 'Keep financial operations accurate, organized and ready to support a growing security solutions business.',
-    responsibilities: ['Maintain account books and records', 'Prepare accounts and tax returns on time', 'Monitor spending and budgets', 'Summarize reports and recommend next actions'],
+    description: 'Help keep BLI’s accounts, records and financial systems accurate and up to date.',
+    responsibilities: ['Keep account books and systems up to date', 'Maintain different receipts properly', 'Prepare accounts and tax returns on time', 'Monitor spending and budgets', 'Advise on reducing costs and increasing profits', 'Ensure accuracy of financial statements and records', 'Summarize monthly reports and suggest necessary actions'],
   },
   {
     title: 'Technical support representative',
-    type: 'Full-time · Kathmandu',
+    type: 'Technical support · Kathmandu',
     image: '/assets/categories/access-control.jpg',
-    description: 'Help customers and colleagues get reliable results from CCTV, access control, attendance and networking systems.',
-    responsibilities: ['Support hardware and software troubleshooting', 'Install and configure security systems', 'Explain technical solutions clearly', 'Coordinate customer and field support'],
+    description: 'Help customers and colleagues install, configure and maintain BLI security and communication systems.',
+    responsibilities: ['Bachelor’s degree in computer science, IT or a similar field', 'Knowledge of hardware, software maintenance, networking and servers', 'Install and configure IP CCTV cameras', 'Install and configure PABX and IP PABX', 'Install and configure biometric attendance systems', 'Explain technical problems clearly', 'At least one year of related experience'],
   },
 ];
 
@@ -24,16 +24,16 @@ export default function CareersPage({ onNavigate }) {
     <main className="public-page careers-page">
       <PublicPageHero
         eyebrow="Careers at BLI"
-        title="Build safer places with a team that cares about the details."
-        description="Join people who make security and communication systems more useful, more dependable and easier to support."
+        title="Start your journey with us."
+        description="Unleash your digital potential and start your journey with BLI."
         current="Careers"
         onNavigate={onNavigate}
       />
 
       <section className="public-section">
         <div className="container public-section-heading public-section-heading--split">
-          <div><span className="eyebrow">Work with us</span><h2>Bring practical thinking to meaningful projects.</h2></div>
-          <p>BLI works across homes, offices, institutions and critical environments. We value ownership, clear communication and the willingness to keep learning.</p>
+          <div><span className="eyebrow">Work with us</span><h2>Bring your skills to meaningful security projects.</h2></div>
+          <p>Join a team working across CCTV, access control, attendance, PABX, networking and other security solutions for homes, businesses and institutions.</p>
         </div>
         <div className="container career-principles">
           <article><span><BriefcaseBusiness size={20} /></span><h3>Work with purpose</h3><p>Your work helps people, assets and operations stay safer.</p></article>

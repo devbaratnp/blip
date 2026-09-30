@@ -1,15 +1,14 @@
 import { ArrowRight, CheckCircle2, ShieldCheck, Wrench } from 'lucide-react';
-import { site } from '../data/site.js';
 import PublicPageHero from '../components/PublicPageHero.jsx';
 
-export default function AboutPage({ onNavigate, onQuote }) {
+export default function AboutPage({ onNavigate, onQuote, current = 'About Us', eyebrow = 'About BLI' }) {
   return (
     <main className="public-page about-page">
       <PublicPageHero
-        eyebrow="About BLI"
-        title="Security solutions built around trust."
-        description="Bhagya Laxmi International Pvt. Ltd. helps homes, businesses and institutions choose, install and maintain dependable security and communication systems."
-        current="About Us"
+        eyebrow={eyebrow}
+        title="Advance, authentic and affordable security solutions for all."
+        description="Bhagya Laxmi brings updated technology and dependable security solutions together in one place for homes, businesses and institutions."
+        current={current}
         onNavigate={onNavigate}
       />
 
@@ -20,10 +19,11 @@ export default function AboutPage({ onNavigate, onQuote }) {
             <span className="public-media__tag">Practical expertise. Long-term support.</span>
           </div>
           <div className="public-copy">
-            <span className="eyebrow">Who we are</span>
-            <h2>A dependable partner for safer places and smoother operations.</h2>
-            <p>{site.name} offers a focused portfolio of CCTV, fire alarm, access control, attendance, PABX, networking and related products.</p>
-            <p>We combine genuine products with clear guidance and professional installation so teams can make confident decisions before, during and after deployment.</p>
+            <span className="eyebrow">About us</span>
+            <h2>Intelligent security and surveillance solutions for the places that matter.</h2>
+            <p>Bhagya Laxmi offers a wide portfolio of products. It covers CCTV Camera, DVR, NVR, PABX System, Biometric Attendance, Access Control, Video Door Phone, PA System, Burglar Alarm System, Fire Alarm System, and many more.</p>
+            <p>Bhagya Laxmi brings intelligent security and surveillance solutions that protect people, properties and assets. They ensure safety, security and productivity in various aspects and help make your premises safer.</p>
+            <p>At present, we are serving governments, hotels, hospitals, educational institutes, homes, infrastructure and transportation, among others. We bring efficient, reliable, scalable and integrated solutions to our customers.</p>
             <button className="button button--primary" type="button" onClick={() => onQuote()}>Talk to a BLI expert <ArrowRight size={16} /></button>
           </div>
         </div>
@@ -33,15 +33,15 @@ export default function AboutPage({ onNavigate, onQuote }) {
         <div className="container public-section-heading">
           <span className="eyebrow">What guides us</span>
           <h2>Advance. Authentic. Affordable.</h2>
-          <p>Our work is shaped by practical technology, honest product advice and support that stays useful after installation day.</p>
+          <p>We are committed to making a positive impact by providing updated advanced technology and most of the security solutions in one place.</p>
         </div>
         <div className="container public-story-stack">
           <article className="public-story-row">
             <div className="public-story-row__copy">
               <span className="public-story-index">01</span>
               <span className="eyebrow">Our vision</span>
-              <h3>Make reliable security technology easier to access.</h3>
-              <p>We want every organization to have access to dependable, appropriately planned systems—without unnecessary complexity or guesswork.</p>
+              <h3>Make our country more secure with affordable solutions.</h3>
+              <p>We aim to make contemporary security solutions available worldwide—easy to use, more advanced, more valuable and more affordable.</p>
             </div>
             <div className="public-story-row__media"><img src="/assets/hero-v2.png" alt="Security systems supporting a modern workplace" /></div>
           </article>
@@ -49,8 +49,8 @@ export default function AboutPage({ onNavigate, onQuote }) {
             <div className="public-story-row__copy">
               <span className="public-story-index">02</span>
               <span className="eyebrow">Our mission</span>
-              <h3>Bring the right products, planning and people together.</h3>
-              <p>From a first consultation to future maintenance, our mission is to make security and communication projects clear, scalable and useful in the real world.</p>
+              <h3>Support customers, dealers and partners with fair practices.</h3>
+              <p>We care about our dealers by bringing diversified and profitable products, and promote fair practices in all our dealings with employees, customers and dealers.</p>
             </div>
             <div className="public-story-row__media"><img src="/assets/categories/access-control.jpg" alt="Access control system installed for a business" /></div>
           </article>
