@@ -1,0 +1,21 @@
+export const site = {
+  name: 'Bhagya Laxmi International Pvt. Ltd. (BLI)',
+  shortName: 'BLI',
+  tagline: 'Advance. Authentic. Affordable.',
+  heroEyebrow: 'Security solutions for a safer tomorrow',
+  heroTitle: 'CCTV, Fire Alarm, Access Control & More at BLI',
+  heroDescription: 'Advance. Authentic. Affordable security solutions for homes, offices and businesses across Nepal.',
+  phone: '+977-1-XXXXXXX',
+  phoneDisplay: '+977-1-XXXXXXX',
+  email: 'info@bli.com.np',
+  address: 'Indrayani Marga, Sanepa-02, Kathmandu, Nepal',
+  hours: 'Sun to Fri, 10:00 to 17:00',
+  responseTime: 'We aim to reply within 24 hours.',
+  navigation: ['CCTV & Cameras', 'Fire Alarm Systems', 'Access Control', 'Time Attendance', 'PABX & Communication', 'Networking'],
+  brands: ['CP PLUS', 'Hikvision', 'EZVIZ', 'Agni', 'Mantra'],
+  benefits: [
+    { title: 'Reliable product range', description: 'Genuine and trusted brands', icon: 'truck' },
+    { title: 'Expert guidance', description: 'Help choosing the right solution', icon: 'settings' },
+    { title: 'Complete security solutions', description: 'From supply to installation support', icon: 'shield' },
+  ],
+};
