@@ -15,11 +15,13 @@ import HelpCenterPage from './pages/HelpCenterPage.jsx';
 import ServicesPage from './pages/ServicesPage.jsx';
 import DownloadPage from './pages/DownloadPage.jsx';
 import DealerPage from './pages/DealerPage.jsx';
+import AdminApp from './admin/AdminApp.jsx';
 
 function readRoute() {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
   const segments = pathname.split('/').filter(Boolean);
   const params = new URLSearchParams(window.location.search);
+  if (segments[0] === 'admin') return { kind: 'admin', path: pathname };
   if (segments[0] === 'product' && segments[1]) return { kind: 'detail', slug: segments[1] };
   if (segments[0] === 'products') return { kind: 'products', query: params.get('search') || '', category: params.get('category') || '' };
   if (segments[0] === 'about') return { kind: 'about' };
@@ -102,6 +104,10 @@ export default function App() {
     const query = filters.query.trim();
     navigate(query ? `/products?search=${encodeURIComponent(query)}` : '/products');
   };
+
+  if (route.kind === 'admin') {
+    return <div className="app-shell"><AdminApp path={route.path} onNavigate={navigate} /></div>;
+  }
 
   return (
     <div className="app-shell">
