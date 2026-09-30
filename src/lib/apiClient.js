@@ -41,7 +41,7 @@ export async function apiRequest(path, options = {}) {
     ...options,
     method,
     credentials: 'include',
-    headers: { Accept: 'application/json', ...(options.body ? { 'Content-Type': 'application/json' } : {}), ...(apiAuthToken() ? { Authorization: 'Bearer ' + apiAuthToken() } : {}), ...(method !== 'GET' && xsrfToken() ? { 'X-XSRF-TOKEN': xsrfToken() } : {}), ...(options.headers || {}) },
+    headers: { Accept: 'application/json', ...(options.body && !(options.body instanceof FormData) ? { 'Content-Type': 'application/json' } : {}), ...(apiAuthToken() ? { Authorization: 'Bearer ' + apiAuthToken() } : {}), ...(method !== 'GET' && xsrfToken() ? { 'X-XSRF-TOKEN': xsrfToken() } : {}), ...(options.headers || {}) },
   });
   const payload = await response.json().catch(() => null);
   if (!response.ok) {
@@ -59,3 +59,4 @@ export async function apiRequest(path, options = {}) {
 export const apiGet = (path) => apiRequest(path);
 export const apiPost = (path, body) => apiRequest(path, { method: 'POST', body: JSON.stringify(body) });
 export const apiPatch = (path, body) => apiRequest(path, { method: 'PATCH', body: JSON.stringify(body) });
+export const apiUpload = (path, body) => apiRequest(path, { method: 'POST', body });

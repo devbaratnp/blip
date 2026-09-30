@@ -9,6 +9,7 @@ use App\Http\Resources\PageResource;
 use App\Http\Resources\PageSectionResource;
 use App\Models\Page;
 use App\Models\PageSection;
+use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,18 +34,21 @@ class PageController extends Controller
         if ($page->status !== 'published') $page->published_at = null;
         if ($page->status !== 'archived') $page->archived_at = null;
         $page->save();
+        AuditLogger::record($request, 'page.updated', 'pages', $page->id, ['status' => $page->status]);
         return new PageResource($page->load('sections'));
     }
 
     public function storeSection(PageSectionRequest $request, Page $page): JsonResponse
     {
         $section = $page->sections()->create($request->validated());
+        AuditLogger::record($request, 'page.section_created', 'page_sections', $section->id, ['pageId' => $page->id]);
         return response()->json(['data' => (new PageSectionResource($section))->resolve($request)], 201);
     }
 
     public function updateSection(PageSectionRequest $request, PageSection $pageSection): JsonResponse
     {
         $pageSection->update($request->validated());
+        AuditLogger::record($request, 'page.section_updated', 'page_sections', $pageSection->id, ['pageId' => $pageSection->page_id]);
         return response()->json(['data' => (new PageSectionResource($pageSection->refresh()))->resolve($request)]);
     }
 
@@ -54,12 +58,14 @@ class PageController extends Controller
         DB::transaction(function () use ($request, $page): void {
             $page->update(['status' => 'published', 'published_at' => now(), 'archived_at' => null, 'updated_by' => $request->user()->id]);
         });
+        AuditLogger::record($request, 'page.published', 'pages', $page->id);
         return new PageResource($page->load('sections'));
     }
 
     public function archive(Request $request, Page $page): PageResource
     {
         $page->update(['status' => 'archived', 'archived_at' => now(), 'updated_by' => $request->user()->id]);
+        AuditLogger::record($request, 'page.archived', 'pages', $page->id);
         return new PageResource($page->load('sections'));
     }
 }

@@ -5,6 +5,9 @@ use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\PageController;
 use App\Http\Controllers\Api\V1\LeadController;
 use App\Http\Controllers\Api\V1\PublicLeadController;
+use App\Http\Controllers\Api\V1\ActivityController;
+use App\Http\Controllers\Api\V1\MediaController;
+use App\Http\Controllers\Api\V1\SettingsController;
 use App\Http\Controllers\Api\V1\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,5 +36,11 @@ Route::middleware('web')->prefix('v1')->group(function (): void {
         Route::get('/leads/{lead}', [LeadController::class, 'show']);
         Route::patch('/leads/{lead}', [LeadController::class, 'update']);
         Route::post('/leads/{lead}/notes', [LeadController::class, 'note']);
+        Route::get('/settings', [SettingsController::class, 'show']);
+        Route::patch('/settings', [SettingsController::class, 'update']);
+        Route::get('/media', [MediaController::class, 'index']);
+        Route::post('/media', [MediaController::class, 'store']);
+        Route::post('/media/{mediaAsset}/archive', [MediaController::class, 'archive']);
+        Route::get('/activity', [ActivityController::class, 'index']);
     });
 });

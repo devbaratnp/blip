@@ -7,6 +7,7 @@ use App\Http\Requests\LeadNoteRequest;
 use App\Http\Requests\LeadUpdateRequest;
 use App\Http\Resources\LeadResource;
 use App\Models\Lead;
+use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,7 @@ class LeadController extends Controller
         $lead->update($changes);
         if (array_key_exists('status', $changes)) $lead->events()->create(['actor_id' => $request->user()->id, 'event' => 'status_changed', 'meta' => ['status' => $changes['status']]]);
         if (array_key_exists('assigned_to', $changes)) $lead->events()->create(['actor_id' => $request->user()->id, 'event' => 'assigned', 'meta' => ['assignedTo' => $changes['assigned_to']]]);
+        AuditLogger::record($request, 'lead.updated', 'leads', $lead->id, array_keys($changes));
         return new LeadResource($lead->load(['assignee:id,name', 'notes.author:id,name', 'events.actor:id,name']));
     }
 
@@ -46,6 +48,7 @@ class LeadController extends Controller
     {
         $lead->notes()->create(['created_by' => $request->user()->id, 'body' => $request->string('body')]);
         $lead->events()->create(['actor_id' => $request->user()->id, 'event' => 'note_added']);
+        AuditLogger::record($request, 'lead.note_added', 'leads', $lead->id);
         return new LeadResource($lead->load(['assignee:id,name', 'notes.author:id,name', 'events.actor:id,name']));
     }
 }

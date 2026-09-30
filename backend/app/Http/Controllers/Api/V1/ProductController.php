@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Support\AuditLogger;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,6 +58,8 @@ class ProductController extends Controller
             return $product->load(['brand:id,name', 'category:id,name']);
         });
 
+        AuditLogger::record($request, 'product.created', 'products', $product->id, ['status' => $product->status]);
+
         return new ProductResource($product);
     }
 
@@ -70,6 +73,7 @@ class ProductController extends Controller
         $product->fill(array_merge($request->validated(), ['updated_by' => $request->user()->id]));
         $this->syncPublishedTimestamp($product);
         $product->save();
+        AuditLogger::record($request, 'product.updated', 'products', $product->id, ['status' => $product->status]);
 
         return new ProductResource($product->load(['brand:id,name', 'category:id,name']));
     }
@@ -78,6 +82,7 @@ class ProductController extends Controller
     {
         abort_if(!$product->name || !$product->slug || !$product->availability, 422, 'Complete the required public product fields before publishing.');
         $product->update(['status' => 'published', 'published_at' => now(), 'updated_by' => $request->user()->id]);
+        AuditLogger::record($request, 'product.published', 'products', $product->id);
 
         return new ProductResource($product->load(['brand:id,name', 'category:id,name']));
     }
@@ -85,6 +90,7 @@ class ProductController extends Controller
     public function archive(Request $request, Product $product): ProductResource
     {
         $product->update(['status' => 'archived', 'archived_at' => now(), 'updated_by' => $request->user()->id]);
+        AuditLogger::record($request, 'product.archived', 'products', $product->id);
 
         return new ProductResource($product->load(['brand:id,name', 'category:id,name']));
     }

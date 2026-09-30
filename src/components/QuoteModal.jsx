@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, FileText, X } from 'lucide-react';
-import { submitPublicLead } from '../lib/leadClient.js';
+import { newIdempotencyKey, submitPublicLead } from '../lib/leadClient.js';
 
 const initialForm = { name: '', company: '', phone: '', email: '', industry: '', quantity: '1', requirement: '', message: '' };
 
@@ -8,6 +8,7 @@ export default function QuoteModal({ product, open, onClose }) {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [submission, setSubmission] = useState({ status: 'idle', error: '' });
+  const idempotencyKey = useRef(newIdempotencyKey());
 
   useEffect(() => {
     if (!open) return undefined;
@@ -17,7 +18,7 @@ export default function QuoteModal({ product, open, onClose }) {
   }, [open, onClose]);
 
   useEffect(() => {
-    if (!open) { setSubmitted(false); setSubmission({ status: 'idle', error: '' }); setForm(initialForm); }
+    if (!open) { setSubmitted(false); setSubmission({ status: 'idle', error: '' }); setForm(initialForm); idempotencyKey.current = newIdempotencyKey(); }
   }, [open]);
 
   if (!open) return null;
@@ -27,8 +28,9 @@ export default function QuoteModal({ product, open, onClose }) {
     event.preventDefault();
     setSubmission({ status: 'submitting', error: '' });
     try {
-      await submitPublicLead({ type: 'quote', name: form.name, company: form.company, phone: form.phone, email: form.email || null, source: 'quote-modal', message: form.message, payload: { industry: form.industry, quantity: form.quantity, requirement: form.requirement, product: product ? { id: product.id, name: product.name, slug: product.slug } : null } });
+      await submitPublicLead({ type: 'quote', idempotencyKey: idempotencyKey.current, name: form.name, company: form.company, phone: form.phone, email: form.email || null, source: 'quote-modal', message: form.message, payload: { industry: form.industry, quantity: form.quantity, requirement: form.requirement, product: product ? { id: product.id, name: product.name, slug: product.slug } : null } });
       setSubmitted(true);
+      idempotencyKey.current = newIdempotencyKey();
       setSubmission({ status: 'idle', error: '' });
     } catch (error) {
       setSubmission({ status: 'error', error: error.payload?.message || error.message });

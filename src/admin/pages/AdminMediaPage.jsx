@@ -1,0 +1,14 @@
+import { useEffect, useState } from 'react';
+import { CheckCircle2, Image, Upload, X } from 'lucide-react';
+import { apiGet, apiUpload } from '../../lib/apiClient.js';
+
+export default function AdminMediaPage() {
+  const [rows, setRows] = useState([]);
+  const [state, setState] = useState({ status: 'loading', error: '', message: '' });
+  const [file, setFile] = useState(null);
+  const [altText, setAltText] = useState('');
+  const load = () => apiGet('/api/v1/media?pageSize=50').then((payload) => { setRows(payload.data || []); setState({ status: 'ready', error: '', message: '' }); }).catch((error) => setState({ status: 'error', error: error.message, message: '' }));
+  useEffect(() => { load(); }, []);
+  const upload = async (event) => { event.preventDefault(); if (!file) return; setState({ status: 'saving', error: '', message: '' }); try { const body = new FormData(); body.append('file', file); body.append('altText', altText); await apiUpload('/api/v1/media', body); setFile(null); setAltText(''); setState({ status: 'saved', error: '', message: 'Media uploaded.' }); load(); } catch (error) { setState({ status: 'error', error: error.message, message: '' }); } };
+  return <section className="admin-page"><div className="admin-page__head"><div><span className="eyebrow">Content</span><h1>Media library</h1><p>Upload approved image and document assets with accessible alt text.</p></div><Image size={28} className="admin-page__head-icon" /></div><form className="admin-upload-card" onSubmit={upload}><label>File<input type="file" accept=".jpg,.jpeg,.png,.webp,.pdf" onChange={(event) => setFile(event.target.files?.[0] || null)} /></label><label>Alt text<input value={altText} onChange={(event) => setAltText(event.target.value)} placeholder="Describe the asset for accessibility" /></label><button className="button button--primary" type="submit" disabled={!file || state.status === 'saving'}><Upload size={15} />{state.status === 'saving' ? 'Uploading…' : 'Upload asset'}</button></form>{state.error && <p className="admin-form-error" role="alert"><X size={16} />{state.error}</p>}{state.message && <p className="admin-form-success" role="status"><CheckCircle2 size={16} />{state.message}</p>}{state.status === 'loading' ? <div className="admin-empty"><p>Loading media…</p></div> : rows.length === 0 ? <div className="admin-empty"><h2>No media uploaded.</h2><p>Uploaded assets will appear here.</p></div> : <div className="admin-media-grid">{rows.map((asset) => <article className="admin-media-card" key={asset.id}>{asset.mimeType?.startsWith('image/') && asset.url ? <img src={asset.url} alt={asset.altText || asset.originalName} /> : <div className="admin-media-card__file">{asset.mimeType}</div>}<strong>{asset.originalName}</strong><small>{asset.altText || 'No alt text'}</small></article>)}</div>}</section>;
+}

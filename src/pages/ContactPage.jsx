@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CheckCircle2, Clock3, Mail, MapPin, Phone, Send } from 'lucide-react';
-import { submitPublicLead } from '../lib/leadClient.js';
+import { newIdempotencyKey, submitPublicLead } from '../lib/leadClient.js';
 import { site } from '../data/site.js';
 import PublicPageHero from '../components/PublicPageHero.jsx';
 
@@ -10,6 +10,7 @@ export default function ContactPage({ onNavigate }) {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [submission, setSubmission] = useState({ status: 'idle', error: '' });
+  const idempotencyKey = useRef(newIdempotencyKey());
 
   const updateField = (field) => (event) => {
     setSubmitted(false);
@@ -21,8 +22,9 @@ export default function ContactPage({ onNavigate }) {
     setSubmitted(false);
     setSubmission({ status: 'submitting', error: '' });
     try {
-      await submitPublicLead({ type: 'contact', name: form.name, email: form.email, source: 'contact-page', message: form.message, payload: { subject: form.subject } });
+      await submitPublicLead({ type: 'contact', idempotencyKey: idempotencyKey.current, name: form.name, email: form.email, source: 'contact-page', message: form.message, payload: { subject: form.subject } });
       setSubmitted(true);
+      idempotencyKey.current = newIdempotencyKey();
       setSubmission({ status: 'idle', error: '' });
       setForm(initialForm);
     } catch (error) {

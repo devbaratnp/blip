@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ArrowRight, CheckCircle2, Handshake, MapPin, Send, Store } from 'lucide-react';
-import { submitPublicLead } from '../lib/leadClient.js';
+import { newIdempotencyKey, submitPublicLead } from '../lib/leadClient.js';
 import { site } from '../data/site.js';
 import PublicPageHero from '../components/PublicPageHero.jsx';
 
@@ -10,14 +10,16 @@ export default function DealerPage({ onNavigate }) {
   const [form, setForm] = useState(initialForm);
   const [submitted, setSubmitted] = useState(false);
   const [submission, setSubmission] = useState({ status: 'idle', error: '' });
+  const idempotencyKey = useRef(newIdempotencyKey());
   const updateField = (field) => (event) => { setSubmitted(false); setForm((current) => ({ ...current, [field]: event.target.value })); };
   const submitForm = async (event) => {
     event.preventDefault();
     setSubmitted(false);
     setSubmission({ status: 'submitting', error: '' });
     try {
-      await submitPublicLead({ type: 'dealer', name: form.name, company: form.company, email: form.email, phone: form.phone, source: 'dealer-page', message: form.businessDetails, payload: { ...form } });
+      await submitPublicLead({ type: 'dealer', idempotencyKey: idempotencyKey.current, name: form.name, company: form.company, email: form.email, phone: form.phone, source: 'dealer-page', message: form.businessDetails, payload: { ...form } });
       setSubmitted(true);
+      idempotencyKey.current = newIdempotencyKey();
       setSubmission({ status: 'idle', error: '' });
       setForm(initialForm);
     } catch (error) {
