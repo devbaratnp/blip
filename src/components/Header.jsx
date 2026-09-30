@@ -3,6 +3,7 @@ import { site } from '../data/site.js';
 import SearchBar from './SearchBar.jsx';
 
 export default function Header({
+  activePath,
   search,
   onSearchChange,
   onSearchSubmit,
@@ -14,6 +15,15 @@ export default function Header({
   mobileNavOpen,
   onToggleMobileNav,
 }) {
+  const navigation = [
+    { label: 'Home', path: '/' },
+    { label: 'Products', path: '/products' },
+    { label: 'Solutions', path: '/products' },
+    { label: 'Projects', path: '/products' },
+    { label: 'About Us', path: '/about' },
+    { label: 'Support', path: '/contact' },
+  ];
+
   return (
     <header className="site-header">
       <div className="utility-bar">
@@ -51,12 +61,7 @@ export default function Header({
       <div className="nav-shell">
         <div className="container nav-inner">
           <nav className={`primary-nav ${mobileNavOpen ? 'primary-nav--open' : ''}`} aria-label="Primary navigation">
-            <button type="button" onClick={() => onNavigate('/')}>Home</button>
-            <button type="button" onClick={() => onNavigate('/products')}>Products</button>
-            <button type="button" onClick={() => onNavigate('/products')}>Solutions</button>
-            <button type="button" onClick={() => onNavigate('/products')}>Projects</button>
-            <button type="button" onClick={() => onNavigate('/products')}>About Us</button>
-            <button type="button" onClick={() => onNavigate('/products')}>Support</button>
+            {navigation.map((item) => <button className={activePath === item.path ? 'is-active' : ''} type="button" key={item.label} aria-current={activePath === item.path ? 'page' : undefined} onClick={() => onNavigate(item.path)}>{item.label}</button>)}
           </nav>
           <button className="nav-quote" type="button" onClick={onQuote}>Request a Quote <ArrowRight size={15} /></button>
         </div>

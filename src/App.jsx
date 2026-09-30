@@ -7,6 +7,14 @@ import QuoteModal from './components/QuoteModal.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ProductDetailPage from './pages/ProductDetailPage.jsx';
 import ProductsPage from './pages/ProductsPage.jsx';
+import AboutPage from './pages/AboutPage.jsx';
+import ContactPage from './pages/ContactPage.jsx';
+import CareersPage from './pages/CareersPage.jsx';
+import CompanyPage from './pages/CompanyPage.jsx';
+import HelpCenterPage from './pages/HelpCenterPage.jsx';
+import ServicesPage from './pages/ServicesPage.jsx';
+import DownloadPage from './pages/DownloadPage.jsx';
+import DealerPage from './pages/DealerPage.jsx';
 
 function readRoute() {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
@@ -14,6 +22,14 @@ function readRoute() {
   const params = new URLSearchParams(window.location.search);
   if (segments[0] === 'product' && segments[1]) return { kind: 'detail', slug: segments[1] };
   if (segments[0] === 'products') return { kind: 'products', query: params.get('search') || '', category: params.get('category') || '' };
+  if (segments[0] === 'about') return { kind: 'about' };
+  if (segments[0] === 'company') return { kind: 'company' };
+  if (segments[0] === 'contact') return { kind: 'contact' };
+  if (segments[0] === 'career' || segments[0] === 'careers') return { kind: 'careers' };
+  if (segments[0] === 'help' || segments[0] === 'help-center') return { kind: 'help' };
+  if (segments[0] === 'services') return { kind: 'services' };
+  if (segments[0] === 'download') return { kind: 'download' };
+  if (segments[0] === 'become-a-dealer' || segments[0] === 'dealer') return { kind: 'dealer' };
   return { kind: 'home' };
 }
 
@@ -79,6 +95,7 @@ export default function App() {
   const openQuote = (product = null) => { setQuoteProduct(product); setQuoteOpen(true); setCartOpen(false); };
   const toggleCompare = (id) => setCompareIds((current) => current.includes(id) ? current.filter((item) => item !== id) : current.length < 3 ? [...current, id] : current);
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const activePath = route.kind === 'products' ? '/products' : route.kind === 'about' ? '/about' : route.kind === 'company' ? '/about' : route.kind === 'contact' ? '/contact' : route.kind === 'careers' ? '/careers' : '/';
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
@@ -88,10 +105,18 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Header search={filters.query} onSearchChange={(value) => updateFilter('query', value)} onSearchSubmit={handleSearchSubmit} onNavigate={navigate} onQuote={() => openQuote()} cartCount={cartCount} cartOpen={cartOpen} onOpenCart={() => setCartOpen(true)} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((current) => !current)} mobileNavOpen={mobileNavOpen} onToggleMobileNav={() => setMobileNavOpen((current) => !current)} />
+      <Header activePath={activePath} search={filters.query} onSearchChange={(value) => updateFilter('query', value)} onSearchSubmit={handleSearchSubmit} onNavigate={navigate} onQuote={() => openQuote()} cartCount={cartCount} cartOpen={cartOpen} onOpenCart={() => setCartOpen(true)} menuOpen={menuOpen} onToggleMenu={() => setMenuOpen((current) => !current)} mobileNavOpen={mobileNavOpen} onToggleMobileNav={() => setMobileNavOpen((current) => !current)} />
       {route.kind === 'home' && <HomePage onNavigate={navigate} onQuote={openQuote} onAddToCart={addToCart} onCompare={toggleCompare} compareIds={compareIds} />}
       {route.kind === 'products' && <ProductsPage filters={filters} onFilterChange={updateFilter} onResetFilters={resetFilters} onNavigate={navigate} onQuote={openQuote} onAddToCart={addToCart} onCompare={toggleCompare} compareIds={compareIds} mobileFiltersOpen={mobileFiltersOpen} onToggleMobileFilters={() => setMobileFiltersOpen((current) => !current)} onCloseMobileFilters={() => setMobileFiltersOpen(false)} />}
       {route.kind === 'detail' && <ProductDetailPage product={selectedProduct} onNavigate={navigate} onQuote={openQuote} onAddToCart={addToCart} />}
+      {route.kind === 'about' && <AboutPage onNavigate={navigate} onQuote={openQuote} />}
+      {route.kind === 'company' && <CompanyPage onNavigate={navigate} onQuote={openQuote} />}
+      {route.kind === 'contact' && <ContactPage onNavigate={navigate} />}
+      {route.kind === 'careers' && <CareersPage onNavigate={navigate} />}
+      {route.kind === 'help' && <HelpCenterPage onNavigate={navigate} />}
+      {route.kind === 'services' && <ServicesPage onNavigate={navigate} onQuote={openQuote} />}
+      {route.kind === 'download' && <DownloadPage onNavigate={navigate} />}
+      {route.kind === 'dealer' && <DealerPage onNavigate={navigate} />}
       <Footer onNavigate={navigate} onQuote={() => openQuote()} />
       <QuoteModal product={quoteProduct} open={quoteOpen} onClose={() => setQuoteOpen(false)} />
       <CartDrawer open={cartOpen} cart={cart} onClose={() => setCartOpen(false)} onChangeQuantity={changeQuantity} onRemove={removeFromCart} onQuote={() => openQuote()} />

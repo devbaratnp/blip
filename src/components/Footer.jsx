@@ -1,7 +1,18 @@
 import { Mail, MapPin, Phone } from 'lucide-react';
 import { site } from '../data/site.js';
 
-const pages = ['Career', 'Home', 'Company', 'Help Center', 'Products', 'Services', 'Download', 'Become A Dealer', 'About Us', 'Contact us'];
+const pages = [
+  { label: 'Career', path: '/careers' },
+  { label: 'Home', path: '/' },
+  { label: 'Company', path: '/about' },
+  { label: 'Help Center', path: '/contact' },
+  { label: 'Products', path: '/products' },
+  { label: 'Services', path: '/services' },
+  { label: 'Download', path: '/download' },
+  { label: 'Become A Dealer', path: '/become-a-dealer' },
+  { label: 'About Us', path: '/about' },
+  { label: 'Contact us', path: '/contact' },
+];
 
 export default function Footer({ onNavigate, onQuote }) {
   return (
@@ -15,18 +26,18 @@ export default function Footer({ onNavigate, onQuote }) {
         </div>
         <div className="footer-reference-pages">
           <h3>Pages</h3>
-          {pages.map((page) => <button type="button" key={page} onClick={() => onNavigate(page === 'Home' ? '/' : '/products')}>{page}</button>)}
+          {pages.map((page) => <button type="button" key={page.label} onClick={() => onNavigate(page.path)}>{page.label}</button>)}
         </div>
         <div className="footer-reference-contact">
           <h3>Find Us</h3>
           <p><MapPin size={17} />Indrayani Marga, Sanepa-02</p>
-          <a href="mailto:info@bli-india.com"><Mail size={17} />info@bli-india.com</a>
+          <a href={`mailto:${site.email}`}><Mail size={17} />{site.email}</a>
           <a href={`tel:${site.phoneHref}`}><Phone size={17} />{site.phoneDisplay}</a>
           <button className="footer-reference-quote" type="button" onClick={onQuote}>Request a Quote <span>→</span></button>
           <div className="footer-socials"><a href="https://facebook.com" aria-label="BLI on Facebook"><span className="social-glyph">f</span></a><a href="https://youtube.com" aria-label="BLI on YouTube"><span className="social-glyph social-glyph--youtube">▶</span></a></div>
         </div>
       </div>
-      <div className="footer-reference-bottom"><div className="container"><span>© 2024 Bhagya Laxmi International Pvt. Ltd. (BLI). All rights reserved.</span><span><button type="button">Privacy Policy</button><button type="button">Terms &amp; Conditions</button><button type="button">Contact Us</button></span></div></div>
+      <div className="footer-reference-bottom"><div className="container"><span>© 2024 Bhagya Laxmi International Pvt. Ltd. (BLI). All rights reserved.</span><span><button type="button">Privacy Policy</button><button type="button">Terms &amp; Conditions</button><button type="button" onClick={() => onNavigate('/contact')}>Contact Us</button></span></div></div>
     </footer>
   );
 }
