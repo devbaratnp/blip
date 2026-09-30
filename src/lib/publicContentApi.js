@@ -25,3 +25,12 @@ export async function getPublicSettings() {
     return { ...fallbackContent.settings, source: 'fallback' };
   }
 }
+
+export async function getPublicDownloads(fallback = []) {
+  try {
+    const payload = await getPublic('/api/v1/public/downloads');
+    return { data: payload.data || payload, source: 'api' };
+  } catch {
+    return { data: fallback, source: 'fallback' };
+  }
+}

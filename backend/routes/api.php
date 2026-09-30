@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\V1\MediaController;
 use App\Http\Controllers\Api\V1\SettingsController;
 use App\Http\Controllers\Api\V1\PublicSettingsController;
 use App\Http\Controllers\Api\V1\TaxonomyController;
+use App\Http\Controllers\Api\V1\DownloadController;
 use App\Http\Controllers\Api\V1\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,7 @@ Route::middleware('web')->prefix('v1')->group(function (): void {
     Route::get('/auth/me', [AuthController::class, 'me'])->middleware(['auth:sanctum', 'admin']);
     Route::get('/public/pages/{page:slug}', [PublicContentController::class, 'page']);
     Route::get('/public/settings', [PublicSettingsController::class, 'show']);
+    Route::get('/public/downloads', [DownloadController::class, 'publicIndex']);
     Route::post('/leads', [PublicLeadController::class, 'store']);
     Route::middleware(['auth:sanctum', 'admin'])->group(function (): void {
         Route::get('/catalog/options', [ProductController::class, 'options']);
@@ -49,5 +51,10 @@ Route::middleware('web')->prefix('v1')->group(function (): void {
         Route::post('/media', [MediaController::class, 'store']);
         Route::post('/media/{mediaAsset}/archive', [MediaController::class, 'archive']);
         Route::get('/activity', [ActivityController::class, 'index']);
+        Route::get('/downloads', [DownloadController::class, 'index']);
+        Route::post('/downloads', [DownloadController::class, 'store']);
+        Route::patch('/downloads/{download}', [DownloadController::class, 'update']);
+        Route::post('/downloads/{download}/publish', [DownloadController::class, 'publish']);
+        Route::post('/downloads/{download}/archive', [DownloadController::class, 'archive']);
     });
 });
