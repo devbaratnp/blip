@@ -19,7 +19,7 @@ export default function Header({
       <div className="utility-bar">
         <div className="container utility-bar__inner">
           <span>Trusted security and communication solutions across Nepal</span>
-          <a href={`tel:${site.phone}`}>Need help? Call {site.phoneDisplay}</a>
+          <a href={`tel:${site.phoneHref}`}>Need help? Call {site.phoneDisplay}</a>
         </div>
       </div>
 

@@ -21,7 +21,7 @@ export default function Footer({ onNavigate, onQuote }) {
           <h3>Find Us</h3>
           <p><MapPin size={17} />Indrayani Marga, Sanepa-02</p>
           <a href="mailto:info@bli-india.com"><Mail size={17} />info@bli-india.com</a>
-          <a href="tel:+919315640135"><Phone size={17} />+91 9315640135</a>
+          <a href={`tel:${site.phoneHref}`}><Phone size={17} />{site.phoneDisplay}</a>
           <button className="footer-reference-quote" type="button" onClick={onQuote}>Request a Quote <span>→</span></button>
           <div className="footer-socials"><a href="https://facebook.com" aria-label="BLI on Facebook"><span className="social-glyph">f</span></a><a href="https://youtube.com" aria-label="BLI on YouTube"><span className="social-glyph social-glyph--youtube">▶</span></a></div>
         </div>

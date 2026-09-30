@@ -334,7 +334,7 @@ h1, h2, h3 { line-height: 1.08; }
   .utility-bar__inner { min-height: 28px; justify-content: center; text-align: center; }
   .utility-bar__inner > span { display: none; }
   .header-main { grid-template-columns: auto 1fr auto; min-height: 72px; gap: 9px; }
-  .mobile-menu-toggle { display: inline-grid; place-items: center; }
+  .mobile-menu-toggle { display: inline-grid; place-items: center; margin-left: -7px; }
   .brand-lockup { justify-self: center; }
   .brand-lockup img { width: 132px; height: 52px; }
   .header-main > .search-bar { display: none; }
