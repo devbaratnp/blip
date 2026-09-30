@@ -7,6 +7,10 @@ const featuredShowcase = [
   { brand: 'CP PLUS', title: 'CP PLUS Bullet Camera', specs: 'Outdoor • 4MP • Night Vision', image: '/assets/products/hikvision.png', slug: 'hikvision-2mp-ir-smart-light-audio-camera' },
   { brand: 'BLI SOLUTIONS', title: 'BLI Network Video Recorder', specs: '8/16 Channel • 4K Support', image: '/assets/categories/networking.jpg', slug: 'networking-switch-router-cabling-solution' },
   { brand: 'AGNI', title: 'Agni Fire Alarm Control Panel', specs: 'Conventional • Reliable Protection', image: '/assets/products/agni.png', slug: 'agni-protection-8-zone-fire-alarm-panel' },
+  { brand: 'MANTRA', title: 'Mantra mBio-G1 Attendance Device', specs: 'Fingerprint • RFID • TCP/IP', image: '/assets/products/mantra.png', slug: 'mantra-mbio-g1-time-attendance-device' },
+  { brand: 'EZVIZ', title: 'EZVIZ H3C Smart Home Camera', specs: 'Outdoor • 3MP • Wi-Fi', image: '/assets/products/ezviz.png', slug: 'ezviz-h3c-2k-3mp-wi-fi-camera' },
+  { brand: 'HIKVISION', title: 'Hikvision Smart Light Camera', specs: '2MP • IR • Indoor and Outdoor', image: '/assets/products/hikvision.png', slug: 'hikvision-2mp-ir-smart-light-audio-camera' },
+  { brand: 'BLI SOLUTIONS', title: 'Access Control Door Lock Solution', specs: 'Readers • Locks • Controllers', image: '/assets/categories/access-control.jpg', slug: 'access-control-door-lock-solution' },
 ];
 
 const whyBli = [
@@ -38,10 +42,6 @@ export default function HomePage({ onNavigate, onQuote }) {
       </section>
 
       <main>
-        <section className="category-strip-section"><div className="container"><span className="eyebrow">Browse our product categories</span><div className="category-strip">{site.productCategoryStrip.map((category) => <button key={category} type="button" onClick={() => onNavigate('/products')}>{category}<ArrowRight size={14} /></button>)}</div></div></section>
-
-        <ClientLogoMarquee onNavigate={onNavigate} />
-
         <section className="section why-section container"><div className="split-heading"><div><span className="eyebrow">Why BLI</span><h2>Advance. Authentic. Affordable.</h2></div><div className="why-intro"><p>Bhagya Laxmi International Pvt. Ltd. (BLI) delivers reliable security and communication solutions with genuine products, expert guidance and professional installation.</p><button className="text-link" type="button" onClick={() => onNavigate('/products')}>Learn more about BLI <ArrowRight size={16} /></button></div></div><div className="why-grid">{whyBli.map(({ title, description, icon: Icon }, index) => <article className="why-card" key={title}><span className="why-card__number">0{index + 1}</span><span className="why-card__icon"><Icon size={23} /></span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
 
         <section className="solutions-section section--tint"><div className="container"><div className="section-heading"><div><span className="eyebrow">Our solutions</span><h2>Smart Security for Every Space</h2><p className="section-subtitle">Tailored security and communication systems for diverse environments.</p></div></div><div className="solutions-grid">{site.solutions.map((solution) => <button type="button" className="solution-card" key={solution.title} onClick={() => onNavigate('/products')}><img src={solution.image} alt="" /><span className="solution-card__overlay"><strong>{solution.title}</strong><small>{solution.description}</small><span>Explore solution <ArrowRight size={14} /></span></span></button>)}</div></div></section>
@@ -49,6 +49,8 @@ export default function HomePage({ onNavigate, onQuote }) {
         <section className="section featured-section container"><div className="section-heading"><div><span className="eyebrow">Featured products</span><h2>Trusted Products for Complete Security</h2></div><button className="text-link" type="button" onClick={() => onNavigate('/products')}>View all products <ArrowRight size={16} /></button></div><div className="showcase-grid">{featuredShowcase.map((item, index) => <article className="showcase-card" key={item.title}><div className="showcase-card__topline"><span>{item.brand}</span><b>0{index + 1}</b></div><button className="showcase-card__image" type="button" onClick={() => onNavigate(`/product/${item.slug}`)}><img src={item.image} alt={item.title} /><span>Featured</span></button><div className="showcase-card__copy"><h3>{item.title}</h3><p>{item.specs}</p><div className="showcase-card__actions"><button className="button button--primary" type="button" onClick={() => onQuote()}><FileText size={14} />Inquiry now</button><button className="text-link" type="button" onClick={() => onNavigate(`/product/${item.slug}`)}>View details <ArrowRight size={14} /></button></div></div></article>)}</div></section>
 
         <section className="projects-section section--navy"><div className="container"><div className="section-heading section-heading--light"><div><span className="eyebrow">Our projects</span><h2>Professional Installation. Real Environments.</h2><p className="section-subtitle">From offices and institutions to commercial and industrial facilities, we design and deploy security systems that keep people, assets and operations safe.</p></div><button className="button button--outline" type="button" onClick={() => onNavigate('/products')}>View our projects <ArrowRight size={16} /></button></div><div className="projects-grid">{projects.map((project) => <article className="project-card" key={project.title}><img src={project.image} alt="" /><div><span>{project.note}</span><h3>{project.title}</h3></div></article>)}</div></div></section>
+
+        <ClientLogoMarquee onNavigate={onNavigate} />
 
         <section className="container cta-banner"><div><span className="eyebrow">Need guidance?</span><h2>Talk to Our Security Experts</h2><p>Get the right solution for your space. We'll help you choose, plan and install the best-fit systems for your requirements.</p></div><button className="button button--primary button--large" type="button" onClick={() => onQuote()}>Request a Free Consultation <ArrowRight size={16} /></button></section>
 

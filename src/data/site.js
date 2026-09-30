@@ -13,7 +13,6 @@ export const site = {
   responseTime: 'We aim to reply within 24 hours.',
   navigation: ['Home', 'Products', 'Solutions', 'Projects', 'About Us', 'Support'],
   brands: ['CP PLUS', 'Hikvision', 'EZVIZ', 'Agni', 'Mantra'],
-  productCategoryStrip: ['IP & AHD Camera', 'Smart WiFi Camera', 'DVR & NVR', 'Video Door Phone', 'Biometric Machine', 'Excellent PABX', 'Burglar Alarm System', 'Hotel Door System', 'Public Address System'],
   solutions: [
     { title: 'Corporate Offices', description: 'Integrated security and communication for productive workspaces.', image: '/assets/categories/access-control.jpg' },
     { title: 'Industrial & Manufacturing', description: 'Durable systems for people, assets and operations.', image: '/assets/categories/fire-alarm.jpg' },
