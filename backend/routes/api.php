@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\ActivityController;
 use App\Http\Controllers\Api\V1\MediaController;
 use App\Http\Controllers\Api\V1\SettingsController;
 use App\Http\Controllers\Api\V1\PublicSettingsController;
+use App\Http\Controllers\Api\V1\TaxonomyController;
 use App\Http\Controllers\Api\V1\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,10 @@ Route::middleware('web')->prefix('v1')->group(function (): void {
     Route::post('/leads', [PublicLeadController::class, 'store']);
     Route::middleware(['auth:sanctum', 'admin'])->group(function (): void {
         Route::get('/catalog/options', [ProductController::class, 'options']);
+        Route::get('/taxonomy', [TaxonomyController::class, 'index']);
+        Route::post('/taxonomy/{type}', [TaxonomyController::class, 'store'])->whereIn('type', ['brands', 'categories']);
+        Route::patch('/taxonomy/{type}/{id}', [TaxonomyController::class, 'update'])->whereIn('type', ['brands', 'categories']);
+        Route::post('/taxonomy/{type}/{id}/archive', [TaxonomyController::class, 'archive'])->whereIn('type', ['brands', 'categories']);
         Route::get('/products', [ProductController::class, 'index']);
         Route::post('/products', [ProductController::class, 'store']);
         Route::get('/products/{product}', [ProductController::class, 'show']);

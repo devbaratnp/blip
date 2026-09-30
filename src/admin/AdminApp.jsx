@@ -12,6 +12,7 @@ import AdminLeadsPage from './pages/AdminLeadsPage.jsx';
 import AdminSettingsPage from './pages/AdminSettingsPage.jsx';
 import AdminActivityPage from './pages/AdminActivityPage.jsx';
 import AdminMediaPage from './pages/AdminMediaPage.jsx';
+import AdminCategoriesPage from './pages/AdminCategoriesPage.jsx';
 
 const placeholderPages = {
   products: ['Products', 'The catalog manager will be connected to the products API here.'],
@@ -44,6 +45,6 @@ export default function AdminApp({ path, onNavigate }) {
   if (session.status === 'loading' || session.status === 'signing-in') return <div className="admin-loading" role="status">Loading Admin workspace…</div>;
   if (adminRoute.kind === 'login' || session.status === 'anonymous' || session.status === 'error') return <AdminLoginPage onSubmit={handleLogin} error={session.error} busy={session.status === 'signing-in'} />;
 
-  const page = adminRoute.kind === 'dashboard' ? <AdminDashboardPage onNavigate={onNavigate} /> : adminRoute.kind === 'products' ? <AdminProductsPage productId={adminRoute.id} onNavigate={onNavigate} /> : adminRoute.kind === 'pages' ? <AdminPagesPage pageId={adminRoute.id} onNavigate={onNavigate} /> : adminRoute.kind === 'leads' ? <AdminLeadsPage leadId={adminRoute.id} onNavigate={onNavigate} /> : adminRoute.kind === 'settings' ? <AdminSettingsPage /> : adminRoute.kind === 'activity' ? <AdminActivityPage /> : adminRoute.kind === 'media' ? <AdminMediaPage /> : <AdminPlaceholderPage title={placeholderPages[adminRoute.kind]?.[0] || 'Admin module'} description={placeholderPages[adminRoute.kind]?.[1] || 'This admin route is not configured yet.'} onNavigate={onNavigate} />;
+  const page = adminRoute.kind === 'dashboard' ? <AdminDashboardPage onNavigate={onNavigate} /> : adminRoute.kind === 'products' ? <AdminProductsPage productId={adminRoute.id} onNavigate={onNavigate} /> : adminRoute.kind === 'pages' ? <AdminPagesPage pageId={adminRoute.id} onNavigate={onNavigate} /> : adminRoute.kind === 'leads' ? <AdminLeadsPage leadId={adminRoute.id} onNavigate={onNavigate} /> : adminRoute.kind === 'settings' ? <AdminSettingsPage /> : adminRoute.kind === 'activity' ? <AdminActivityPage /> : adminRoute.kind === 'media' ? <AdminMediaPage /> : adminRoute.kind === 'categories' ? <AdminCategoriesPage /> : <AdminPlaceholderPage title={placeholderPages[adminRoute.kind]?.[0] || 'Admin module'} description={placeholderPages[adminRoute.kind]?.[1] || 'This admin route is not configured yet.'} onNavigate={onNavigate} />;
   return <AdminShell user={session.user} path={path.replace(/\/$/, '') || '/admin'} onNavigate={onNavigate} onLogout={handleLogout}>{page}</AdminShell>;
 }
